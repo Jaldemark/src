@@ -76,7 +76,7 @@ public class GraphFrame extends JFrame {
 		clearShop = new JMenuItem("Clear shop");
 		clearShop.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
-			System.out.println("push test");	
+				
 			Shop.setShop(0,0);
 			theArea.setText(Shop.getShop());
 			}

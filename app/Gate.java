@@ -12,15 +12,14 @@ import javax.swing.*;
 
 import testProject.*;
 
-public class AndGate implements Node {
+public class Gate implements Node {
 
 	int draggedAtX,draggedAtY;
-	public AndGate(Color aColor) {
+	public Gate(Color aColor) {
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
-		color = aColor;
-		this.add(1);
+		color = aColor;	 
 	}
 	public String getType(){
 		return "AndGate";
@@ -44,33 +43,15 @@ public class AndGate implements Node {
 			return null;
 		}
 	}
-	/**
-	 * 
-	 * @param n is the amount of gates to be added
-	 */
-	public void add(int n){
-		Gate temp = new Gate(Color.BLACK);
-		Rectangle2D test =new Rectangle2D.Double(x, y, size, size);
-		test.add(temp.getBounds());
-	}
 
 	public void draw(Graphics2D g2) {
 		Rectangle2D square = new Rectangle2D.Double(x, y, size, size);
-		Ellipse2D cir = new Ellipse2D.Double(x-5,y+1,5,5);
-		Ellipse2D cir1 = new Ellipse2D.Double(x-5,y+14,5,5);
-		Ellipse2D cir2 = new Ellipse2D.Double(x+20,y+1,5,5);
-		Ellipse2D cir3 = new Ellipse2D.Double(x+20,y+14,5,5);
+		square.add(new Rectangle2D.Double(x+2,y,size/2,size/2));
 		Color oldColor = g2.getColor();
 		g2.setColor(color);
-		g2.setStroke(new BasicStroke(1));
-		
 		g2.fill(square);
 		g2.setColor(oldColor);
 		g2.draw(square);
-		g2.draw(cir);
-		g2.draw(cir1);
-		g2.draw(cir2);
-		g2.draw(cir3);
 	}
 
 	public void translate(double dx, double dy) {
@@ -93,6 +74,4 @@ public class AndGate implements Node {
 		Rectangle2D square = new Rectangle2D.Double(x, y, size, size);
 		return square.contains(thePoint);
 	}
-	
-	
 }

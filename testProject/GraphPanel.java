@@ -41,6 +41,7 @@ public class GraphPanel extends JComponent {
 					if(theNode!=null){
 						clickedObject = theNode;
 						thePointer = mousePoint;
+						currentPointer = thePointer;
 						theBounds = theNode.getBounds();
 					}
 					else
@@ -71,8 +72,6 @@ public class GraphPanel extends JComponent {
 							graph.deleteAll();
 							repaint();
 						}
-						
-						
 					});
 					
 					pMenu.add(delete);
@@ -94,38 +93,38 @@ public class GraphPanel extends JComponent {
 							deleteNode();
 						}
 
-						
 					});
-					pMenu.show(GraphPanel.this, event.getX(), event.getY());
-					
-				}
-				
-				
+					pMenu.show(GraphPanel.this, event.getX(), event.getY());	
+				}		
 			}
 				public void mouseReleased(MouseEvent event){
 					Object tool = toolBar.getSelectedTool();
 				
 					Point2D mousePoint = event.getPoint();
-					
-					repaint();
-
 					thePointer = null;
 					currentPointer = null;
 					theBounds = null;
-					
-				
+					mouse = false;
+					repaint();
+
 				}
 			});
 				
 				addMouseMotionListener(new MouseMotionAdapter(){
 					public void mouseDragged(MouseEvent event){
+						Node theNode = graph.findNode(event.getPoint());
 						Object tool = toolBar.getSelectedTool();
 						Point2D newPoint = event.getPoint();
 						
 							if(theBounds != null&&!SwingUtilities.isRightMouseButton(event)){
-									Node n = (Node) clickedObject;
+									Node n = (Node)clickedObject;
 									n.setY(newPoint.getY());
 									n.setX(newPoint.getX());
+							}
+							else if(theNode!=null){
+								mouse = true;
+								xPointer = event.getX();
+								yPointer = event.getY();
 							}
 						
 						currentPointer = newPoint;
@@ -145,10 +144,12 @@ public class GraphPanel extends JComponent {
 
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		//int width = getWidth();
-	    //int height = getHeight();
-	    
 		graph.draw(g2);
+		if(thePointer !=null){
+			g2.setColor(Color.GREEN);
+			g2.draw(new Line2D.Double(thePointer, currentPointer));
+		}
+	
 	}
 
 	

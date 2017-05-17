@@ -2,8 +2,7 @@ package testProject;
 
 import java.awt.*;
 
-
-
+import app.Line;
 import app.Shop;
 
 import java.awt.geom.*;
@@ -20,7 +19,7 @@ public class GraphPanel extends JComponent {
 	Shop shop;
 	int xPointer;
 	int yPointer;
-	Boolean mouse;
+	Boolean mouse=false;
 	
 	private Point2D thePointer;
 	private Rectangle2D theBounds;
@@ -37,13 +36,20 @@ public class GraphPanel extends JComponent {
 				Point2D mousePoint = event.getPoint();
 				Object tool = toolBar.getSelectedTool();
 				Node theNode = graph.findNode(mousePoint);
+				boolean gate = graph.findGate(mousePoint);
+				Line theLine = graph.findLine(mousePoint);
 				if(tool==null){
 					if(theNode!=null){
 						clickedObject = theNode;
-						thePointer = mousePoint;
-						currentPointer = thePointer;
+						
 						theBounds = theNode.getBounds();
 					}
+					else if(gate){
+						thePointer = mousePoint;
+						currentPointer = thePointer;
+					}
+					else if(theLine!=null)
+						clickedObject = theLine;
 					else
 						clickedObject = null;
 				}
@@ -78,33 +84,60 @@ public class GraphPanel extends JComponent {
 					pMenu.show(GraphPanel.this, event.getX(), event.getY());
 				}
 				
-				else if((SwingUtilities.isRightMouseButton(event))&&theNode!=null){
-					clickedObject=theNode;
-					JPopupMenu pMenu = new JPopupMenu();
-					JMenuItem delete = new JMenuItem("Delete");
-					pMenu.add(delete);
-					delete.addActionListener(new
-							ActionListener()
-					{
-						public void actionPerformed(ActionEvent event)
-						{
-							Shop.removeFromShop(theNode);
-							GraphFrame.theArea.setText(Shop.getShop());
-							deleteNode();
+				else if((SwingUtilities.isRightMouseButton(event))){
+					
+						//clickedObject=theNode;
+						JPopupMenu pMenu = new JPopupMenu();
+						JMenuItem delete = new JMenuItem("Delete");
+						pMenu.add(delete);
+						if(theNode!=null){
+							clickedObject = theNode;
+							delete.addActionListener(new
+									ActionListener()
+							{
+								public void actionPerformed(ActionEvent event)
+								{
+									Shop.removeFromShop(theNode);
+									GraphFrame.theArea.setText(Shop.getShop());
+									deleteNode();
+								}
+		
+							});
 						}
+						else if(theLine!=null){
+							clickedObject = theLine;
+							delete.addActionListener(new
+									ActionListener()
+							{
+								public void actionPerformed(ActionEvent event)
+								{
+									deleteLine();
+								}
 
-					});
-					pMenu.show(GraphPanel.this, event.getX(), event.getY());	
+								
+		
+							});
+						}
+						pMenu.show(GraphPanel.this, event.getX(), event.getY());	
+						
+					
 				}		
 			}
 				public void mouseReleased(MouseEvent event){
 					Object tool = toolBar.getSelectedTool();
 				
 					Point2D mousePoint = event.getPoint();
+					boolean gate = graph.findGate(mousePoint);
+					if(gate){
+						graph.addLine(thePointer,currentPointer);
+					}
+					else{
+					
 					thePointer = null;
 					currentPointer = null;
 					theBounds = null;
 					mouse = false;
+					}
 					repaint();
 
 				}
@@ -112,25 +145,25 @@ public class GraphPanel extends JComponent {
 				
 				addMouseMotionListener(new MouseMotionAdapter(){
 					public void mouseDragged(MouseEvent event){
-						Node theNode = graph.findNode(event.getPoint());
-						Object tool = toolBar.getSelectedTool();
 						Point2D newPoint = event.getPoint();
-						
+						Object tool = toolBar.getSelectedTool();
+						boolean gate = graph.findGate(newPoint);
+						if(tool==null){
 							if(theBounds != null&&!SwingUtilities.isRightMouseButton(event)){
 									Node n = (Node)clickedObject;
 									n.setY(newPoint.getY());
 									n.setX(newPoint.getX());
 							}
-							else if(theNode!=null){
+							else if(gate||mouse){
 								mouse = true;
 								xPointer = event.getX();
 								yPointer = event.getY();
 							}
 						
-						currentPointer = newPoint;
-						repaint();
+							currentPointer = newPoint;
+							repaint();
+							}
 						}
-					
 					});
 						
 			}
@@ -138,16 +171,20 @@ public class GraphPanel extends JComponent {
 	private void deleteNode() {
 		graph.deleteSelected((Node)clickedObject);
 		repaint();
+	}
+	private void deleteLine() {
+		graph.deleteSelected((Line)clickedObject);
+		repaint();
 		
 	}
-	
-
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		graph.draw(g2);
-		if(thePointer !=null){
-			g2.setColor(Color.GREEN);
-			g2.draw(new Line2D.Double(thePointer, currentPointer));
+		if(mouse){
+			Line l = new Line(thePointer,currentPointer);
+			g2.setColor(Color.RED);
+			l.draw(g2);
+			//g2.draw(new Line2D.Double(thePointer, currentPointer));
 		}
 	
 	}

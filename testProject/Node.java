@@ -19,4 +19,6 @@ public interface Node extends Cloneable {
 	double getX();
 	double getY();
 	String getType();
+
+	Ellipse2D getGates(int n);
 }

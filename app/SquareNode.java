@@ -86,6 +86,15 @@ public class SquareNode implements Node {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
+
+	@Override
+	public Ellipse2D getGates(int n) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

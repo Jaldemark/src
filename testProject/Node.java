@@ -3,8 +3,9 @@ package testProject;
 import java.awt.*;
 
 import java.awt.geom.*;
+import java.io.Serializable;
 
-public interface Node extends Cloneable {
+public interface Node extends Cloneable,Serializable {
 
 	void draw(Graphics2D g2);
 

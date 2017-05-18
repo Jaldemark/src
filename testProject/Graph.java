@@ -18,7 +18,7 @@ import java.util.List;
 import javax.swing.*;
 
 
-public abstract class Graph {
+public abstract class Graph implements Serializable{
 	private ArrayList<Node> nodes;
 	private final ArrayList<Line> lines = new ArrayList<Line>();
 	public TextField shop;

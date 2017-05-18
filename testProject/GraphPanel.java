@@ -179,6 +179,7 @@ public class GraphPanel extends JComponent {
 								}
 									n.moveAtCursor(x-offSetX,y-offSetY);
 									mouse = false;
+									//t
 							}
 							else if(gate!=null||mouse){
 								

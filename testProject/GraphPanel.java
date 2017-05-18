@@ -2,6 +2,7 @@ package testProject;
 
 import java.awt.*;
 
+import app.Gate;
 import app.Line;
 import app.Shop;
 
@@ -36,15 +37,16 @@ public class GraphPanel extends JComponent {
 				Point2D mousePoint = event.getPoint();
 				Object tool = toolBar.getSelectedTool();
 				Node theNode = graph.findNode(mousePoint);
-				boolean gate = graph.findGate(mousePoint);
+				Gate gate = graph.findGate(mousePoint);
 				Line theLine = graph.findLine(mousePoint);
 				if(tool==null){
 					if(theNode!=null){
 						clickedObject = theNode;
-						
+						thePointer = mousePoint;
 						theBounds = theNode.getBounds();
 					}
-					else if(gate){
+					else if(gate!=null){
+						clickedObject = gate;
 						thePointer = mousePoint;
 						currentPointer = thePointer;
 					}
@@ -53,10 +55,11 @@ public class GraphPanel extends JComponent {
 					else
 						clickedObject = null;
 				}
-				else /*if (tool != null)*/ {
+				else  {
 					Node prototype = (Node) tool;
 					Node newNode = (Node) prototype.clone();
 					if(theNode==null&&!SwingUtilities.isRightMouseButton(event)){
+						
 						graph.add(newNode, mousePoint);	
 						Shop.addToShop(newNode);
 						GraphFrame.theArea.setText(Shop.getShop());
@@ -85,8 +88,7 @@ public class GraphPanel extends JComponent {
 				}
 				
 				else if((SwingUtilities.isRightMouseButton(event))){
-					
-						//clickedObject=theNode;
+
 						JPopupMenu pMenu = new JPopupMenu();
 						JMenuItem delete = new JMenuItem("Delete");
 						pMenu.add(delete);
@@ -121,14 +123,14 @@ public class GraphPanel extends JComponent {
 						pMenu.show(GraphPanel.this, event.getX(), event.getY());	
 						
 					
-				}		
+				}
+				currentPointer = mousePoint;
+				repaint();
 			}
 				public void mouseReleased(MouseEvent event){
-					Object tool = toolBar.getSelectedTool();
-				
 					Point2D mousePoint = event.getPoint();
-					boolean gate = graph.findGate(mousePoint);
-					if(gate){
+					Gate gate = graph.findGate(mousePoint);
+					if(gate!=null){
 						graph.addLine(thePointer,currentPointer);
 					}
 					else{
@@ -147,21 +149,46 @@ public class GraphPanel extends JComponent {
 					public void mouseDragged(MouseEvent event){
 						Point2D newPoint = event.getPoint();
 						Object tool = toolBar.getSelectedTool();
-						boolean gate = graph.findGate(newPoint);
+						Gate gate = graph.findGate(newPoint);
+						Node n = (Node)clickedObject;
 						if(tool==null){
 							if(theBounds != null&&!SwingUtilities.isRightMouseButton(event)){
-									Node n = (Node)clickedObject;
+								if(graph.nodeContainsStart(n)!=null){
+									for(int i=0;i<3;i++){
+										Gate g = n.getGates(i);
+										graph.nodeContainsEnd(g);
+									}
+								}
+								else if(graph.nodeContainsEnd(n)!=null){
+									for(int i=0;i<3;i++){
+										Gate g = n.getGates(i);
+										graph.nodeContainsEnd(g);
+									}
+								}
+								else if(graph.nodeContainsEnd(n)!=null &&graph.nodeContainsStart(n)!=null){
+									for(int i=0;i<3;i++){
+										Gate g = n.getGates(i);
+										graph.nodeContainsEnd(g);
+										graph.nodeContainsEnd(g);
+									}
+								}
 									n.setY(newPoint.getY());
 									n.setX(newPoint.getX());
+									
 							}
-							else if(gate||mouse){
+							else if(gate!=null||mouse){
+								
 								mouse = true;
-								xPointer = event.getX();
-								yPointer = event.getY();
+								if(gate!=null){
+								
+									gate.setLineCordinate(newPoint);
+									currentPointer = gate.getLineCordinate();
+								}
 							}
-						
-							currentPointer = newPoint;
+								
+								currentPointer = newPoint;
 							repaint();
+							
 							}
 						}
 					});
@@ -177,6 +204,7 @@ public class GraphPanel extends JComponent {
 		repaint();
 		
 	}
+
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		graph.draw(g2);
@@ -184,8 +212,8 @@ public class GraphPanel extends JComponent {
 			Line l = new Line(thePointer,currentPointer);
 			g2.setColor(Color.RED);
 			l.draw(g2);
-			//g2.draw(new Line2D.Double(thePointer, currentPointer));
 		}
+	
 	
 	}
 

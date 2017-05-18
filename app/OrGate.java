@@ -14,11 +14,17 @@ import testProject.*;
 
 public class OrGate implements Node {
 
-	Ellipse2D cir;
-	Ellipse2D cir1;
-	Ellipse2D cir2;
-	Ellipse2D[] theCircles = {cir,cir1,cir2};
+	Gate cir;
+	Gate cir1;
+	Gate cir2;
+	Gate[] theCircles = {cir,cir1,cir2};
 	int draggedAtX,draggedAtY;
+	
+	private double x;
+	private double y;
+	private double size;
+	private Color color;
+	private static final int DEFAULT_SIZE = 30;
 	public OrGate(Color aColor) {
 		size = DEFAULT_SIZE;
 		x = 0;
@@ -47,7 +53,6 @@ public class OrGate implements Node {
 			return null;
 		}
 	}
-
 	public void draw(Graphics2D g2) {
 		Rectangle2D square = new Rectangle2D.Double(x, y, size, size);
 		setGates();
@@ -56,10 +61,10 @@ public class OrGate implements Node {
 		g2.fill(square);
 		g2.setColor(oldColor);
 		g2.draw(square);
-		g2.fill(cir);
-		g2.draw(cir);
-		g2.draw(cir1);
-		g2.draw(cir2);
+		g2.fill(cir.get());
+		g2.draw(cir.get());
+		g2.draw(cir1.get());
+		g2.draw(cir2.get());
 	}
 
 	public void translate(double dx, double dy) {
@@ -71,11 +76,7 @@ public class OrGate implements Node {
 		return new Rectangle2D.Double(x, y, size, size);
 	}
 
-	private double x;
-	private double y;
-	private double size;
-	private Color color;
-	private static final int DEFAULT_SIZE = 20;
+
 	
 	@Override
 	public boolean contains(Point2D thePoint) {
@@ -83,22 +84,21 @@ public class OrGate implements Node {
 		return square.contains(thePoint);
 	}
 	public void setGates(){
-		cir  = new Ellipse2D.Double(x-5,y+1,5,5);
-		cir1 = new Ellipse2D.Double(x-5,y+14,5,5);
-		cir2 = new Ellipse2D.Double(x+20,y+7,5,5);
+		cir  = new Gate(Color.BLACK, x-5,y+5);
+		cir1 = new Gate(Color.black,x-5,y+20);
+		cir2 = new Gate(Color.BLACK,x+30,y+12);
 		theCircles[0]=cir;
 		theCircles[1]=cir1;
 		theCircles[2]=cir2;
 	}
-	public Ellipse2D[] getGates(){
-		return theCircles;
-	}
+	
 	@Override
-	public Ellipse2D getGates(int n){
+	public Gate getGates(int n){
 		setGates();
 		return theCircles[n];
 		
 	}
+
 	
 	
 }

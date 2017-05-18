@@ -4,6 +4,8 @@ import java.awt.*;
 
 import java.awt.geom.*;
 
+import app.Gate;
+
 public interface Node extends Cloneable {
 
 	void draw(Graphics2D g2);
@@ -20,5 +22,8 @@ public interface Node extends Cloneable {
 	double getY();
 	String getType();
 
-	Ellipse2D getGates(int n);
+	Gate getGates(int n);
+
+
+
 }

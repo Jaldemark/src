@@ -21,6 +21,7 @@ import javax.swing.*;
 public abstract class Graph {
 	private ArrayList<Node> nodes;
 	private final ArrayList<Line> lines = new ArrayList<Line>();
+	private final ArrayList<Gate> gates = new ArrayList<Gate>();
 	public TextField shop;
 	
 	public Graph() {
@@ -35,10 +36,14 @@ public abstract class Graph {
 	}
 
 	public void draw(Graphics2D g2) {
+		
 		for (Node n : nodes)
 			n.draw(g2);
-		for(Line l : lines)
+			
+		for(Line l : lines){
+			g2.setStroke(new BasicStroke(3));
 			l.draw(g2);
+		}
 	}
 
 	public abstract Node[] getNodePrototypes();
@@ -70,18 +75,18 @@ public abstract class Graph {
 		}
 		return null;
 	}
-	public boolean findGate(Point2D p){
-		Ellipse2D temp;
+	public Gate findGate(Point2D p){
+		Gate temp;
 		for(int i = 0; i<nodes.size(); i++ ){
 			Node newNode = nodes.get(i);
 			for(int j=0;j<3;j++){
 				temp = newNode.getGates(j);
 				if(temp.contains(p)){
-					return true;
+					return temp;
 				}
 			}
 		}
-		return false;
+		return null;
 	}
 
 	public void deleteSelected(Node theNode) {
@@ -115,8 +120,78 @@ public abstract class Graph {
 	        this.lines.add(new Line(p1,p2));
 	        Line2D theLine =new Line2D.Double(p1,p2);
 	        return theLine;
-	    }
+	        
+	 }
+	 public Line checkSelected(Node a){
+		 for(int i=0;i<lines.size();i++){
+			 for(int j=0;j<3;j++){
+				 if(lines.get(i).contains(a.getGates(j).getLineCordinate())){
+					 return lines.get(i);
+				 }
+				 
+			 }
+		 }
+		 return null;
+	 }
+	 public ArrayList<Line> getLines(){
+		 return lines;
+	 }
 
+	
+	public Line nodeContainsStart(Gate g) {
+		Point2D p = new Point2D.Double(0,0);
+			for(int j=0;j<lines.size();j++){
+				if(g.contains(lines.get(j).getStartPoint())){
+					p.setLocation(g.getCenterX(), g.getCenterY());
+					lines.get(j).setStartPoint(p);
+					return lines.get(j);
+				}
+			}
+		return null;
+		
+	}
+	public Line nodeContainsEnd(Node n) {
+		Point2D p = new Point2D.Double(0,0);
+		for(int i=0;i<3;i++){
+			Gate g = n.getGates(i);
+			for(int j=0;j<lines.size();j++){
+				if(g.contains(lines.get(j).getEndPoint())){
+					p.setLocation(g.getCenterX(), g.getCenterY());
+					lines.get(j).setEndPoint(p);
+					return lines.get(j);
+				}
+			}
+		}
+		return null;
+		
+	}
+	public Line nodeContainsEnd(Gate g) {
+		Point2D p = new Point2D.Double(0,0);
+			for(int j=0;j<lines.size();j++){
+				if(g.contains(lines.get(j).getEndPoint())){
+					p.setLocation(g.getCenterX(), g.getCenterY());
+					lines.get(j).setEndPoint(p);
+					return lines.get(j);
+				}
+			}
+		return null;
+	}
+
+	public Object nodeContainsStart(Node n) {
+		Point2D p = new Point2D.Double(0,0);
+		for(int i=0;i<3;i++){
+			Gate g=n.getGates(i);
+			for(int j=0;j<lines.size();j++){
+				if(g.contains(lines.get(j).getStartPoint())){
+					p.setLocation(g.getCenterX(), g.getCenterY());
+					lines.get(j).setStartPoint(p);
+					return lines.get(j);
+				}
+			}
+		}
+	
+		return null;
+	}
 
 	
 

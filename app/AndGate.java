@@ -102,4 +102,8 @@ public class AndGate implements Node {
 		return theCircles[n];
 		
 	}
+	
+	public int nrOfConn() {
+		return theCircles.length;
+	}
 }

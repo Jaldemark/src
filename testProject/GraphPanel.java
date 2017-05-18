@@ -154,19 +154,19 @@ public class GraphPanel extends JComponent {
 						if(tool==null){
 							if(theBounds != null&&!SwingUtilities.isRightMouseButton(event)){
 								if(graph.nodeContainsStart(n)!=null){
-									for(int i=0;i<3;i++){
+									for(int i=0;i<n.nrOfConn();i++){
 										Gate g = n.getGates(i);
 										graph.nodeContainsEnd(g);
 									}
 								}
 								else if(graph.nodeContainsEnd(n)!=null){
-									for(int i=0;i<3;i++){
+									for(int i=0;i<n.nrOfConn();i++){
 										Gate g = n.getGates(i);
 										graph.nodeContainsEnd(g);
 									}
 								}
 								else if(graph.nodeContainsEnd(n)!=null &&graph.nodeContainsStart(n)!=null){
-									for(int i=0;i<3;i++){
+									for(int i=0;i<n.nrOfConn();i++){
 										Gate g = n.getGates(i);
 										graph.nodeContainsEnd(g);
 										graph.nodeContainsEnd(g);

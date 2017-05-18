@@ -4,7 +4,7 @@ import javax.swing.JTextField;
 
 import testProject.*;
 
-public class TextField extends JTextField {
+public class TextField extends JTextField{
 
 	public JTextField shopping;
 	//String s;

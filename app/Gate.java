@@ -113,5 +113,9 @@ public class Gate implements Node {
 		return cir.getCenterY();
 	}
 	
+	public int nrOfConn() {
+		return theCircles.length;
+	}
+	
 	
 }

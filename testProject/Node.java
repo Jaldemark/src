@@ -26,6 +26,7 @@ public interface Node extends Cloneable,Serializable {
 	double getX();
 	double getY();
 	String getType();
+	int nrOfConn();
 
 	Gate getGates(int n);
 

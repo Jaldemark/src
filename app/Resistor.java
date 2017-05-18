@@ -1,5 +1,6 @@
 package app;
 
+import testProject.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,29 +11,28 @@ import java.util.List;
 import java.awt.event.*;
 import javax.swing.*;
 
-import testProject.*;
-
-public class OrGate implements Node {
-
+public class Resistor implements Node {
+	int draggedAtX,draggedAtY;
+	 
 	Gate cir;
 	Gate cir1;
-	Gate cir2;
-	Gate[] theCircles = {cir,cir1,cir2};
-	int draggedAtX,draggedAtY;
-	
+	//Gate cir2;
+	Gate[] theCircles = {cir,cir1/*cir2*/};
 	private double x;
 	private double y;
 	private double size;
 	private Color color;
 	private static final int DEFAULT_SIZE = 30;
-	public OrGate(Color aColor) {
+	
+	public Resistor(Color aColor) {
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
-		color = aColor;	 
+		color = aColor;
+		
 	}
 	public String getType(){
-		return "OrGate";
+		return "Resistor";
 	}
 	public double getX(){
 		return x;
@@ -53,18 +53,31 @@ public class OrGate implements Node {
 			return null;
 		}
 	}
+	public void setGates(){
+		cir  = new Gate(Color.BLACK, x-5,y+12);
+		cir1 = new Gate(Color.black,x+30,y+12);
+		//cir2 = new Gate(Color.BLACK,x+30,y+12);
+		theCircles[0]=cir;
+		theCircles[1]=cir1;
+		//theCircles[2]=cir2;
+	}
+
+
 	public void draw(Graphics2D g2) {
 		Rectangle2D square = new Rectangle2D.Double(x, y, size, size);
 		setGates();
+		//Ellipse2D cir3 = new Ellipse2D.Double(x+20,y+14,5,5);
 		Color oldColor = g2.getColor();
 		g2.setColor(color);
+		g2.setStroke(new BasicStroke(1));
+		
 		g2.fill(square);
 		g2.setColor(oldColor);
 		g2.draw(square);
 		g2.fill(cir.get());
 		g2.draw(cir.get());
 		g2.draw(cir1.get());
-		g2.draw(cir2.get());
+		//.draw(cir2.get());
 	}
 
 	public void translate(double dx, double dy) {
@@ -76,22 +89,11 @@ public class OrGate implements Node {
 		return new Rectangle2D.Double(x, y, size, size);
 	}
 
-
-	
 	@Override
 	public boolean contains(Point2D thePoint) {
 		Rectangle2D square = new Rectangle2D.Double(x, y, size, size);
 		return square.contains(thePoint);
 	}
-	public void setGates(){
-		cir  = new Gate(Color.BLACK, x-5,y+5);
-		cir1 = new Gate(Color.black,x-5,y+20);
-		cir2 = new Gate(Color.BLACK,x+30,y+12);
-		theCircles[0]=cir;
-		theCircles[1]=cir1;
-		theCircles[2]=cir2;
-	}
-	
 	@Override
 	public Gate getGates(int n){
 		setGates();
@@ -99,10 +101,7 @@ public class OrGate implements Node {
 		
 	}
 	public int nrOfConn() {
-		// TODO Auto-generated method stub
 		return theCircles.length;
 	}
-
-	
 	
 }

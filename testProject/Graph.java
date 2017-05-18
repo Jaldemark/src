@@ -77,7 +77,7 @@ public abstract class Graph implements Serializable{
 		Gate temp;
 		for(int i = 0; i<nodes.size(); i++ ){
 			Node newNode = nodes.get(i);
-			for(int j=0;j<3;j++){
+			for(int j=0;j<newNode.nrOfConn();j++){
 				temp = newNode.getGates(j);
 				if(temp.contains(p)){
 					return temp;
@@ -122,7 +122,7 @@ public abstract class Graph implements Serializable{
 	 }
 	 public Line checkSelected(Node a){
 		 for(int i=0;i<lines.size();i++){
-			 for(int j=0;j<3;j++){
+			 for(int j=0;j<a.nrOfConn();j++){
 				 if(lines.get(i).contains(a.getGates(j).getLineCordinate())){
 					 return lines.get(i);
 				 }
@@ -150,7 +150,7 @@ public abstract class Graph implements Serializable{
 	}
 	public Line nodeContainsEnd(Node n) {
 		Point2D p = new Point2D.Double(0,0);
-		for(int i=0;i<3;i++){
+		for(int i=0;i<n.nrOfConn();i++){
 			Gate g = n.getGates(i);
 			for(int j=0;j<lines.size();j++){
 				if(g.contains(lines.get(j).getEndPoint())){
@@ -177,7 +177,7 @@ public abstract class Graph implements Serializable{
 
 	public Object nodeContainsStart(Node n) {
 		Point2D p = new Point2D.Double(0,0);
-		for(int i=0;i<3;i++){
+		for(int i=0;i<n.nrOfConn();i++){
 			Gate g=n.getGates(i);
 			for(int j=0;j<lines.size();j++){
 				if(g.contains(lines.get(j).getStartPoint())){

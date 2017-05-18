@@ -6,8 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 
-public class Line {
+public class Line implements Serializable {
     public Point2D p1;
     public Point2D p2;
     double x1;

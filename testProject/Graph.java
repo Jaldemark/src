@@ -51,9 +51,7 @@ public abstract class Graph implements Serializable{
 	public List<Node> getNodes() {
 		return Collections.unmodifiableList(nodes);
 	}
-	public TextField shop(int n, String s){
-		return new TextField(n,s);
-	}
+
 	/**
 	 * checks if the mousepoint is on the node
 	 * @return true if the pointer is on a node

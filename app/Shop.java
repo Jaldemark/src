@@ -1,5 +1,6 @@
 package app;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import testProject.Node;
@@ -17,9 +18,7 @@ public class Shop {
 	 * Add Items to the shop
 	 * @param r The Node added to the grid
 	 */
-	public static void addToShop(Node a){
-		
-		
+	public static void addToShop(Node a){		
 			switch(a.getType()){
 				case "AndGate":	andCount++; 
 								setShop(andCount, orCount);
@@ -28,9 +27,6 @@ public class Shop {
 								setShop(andCount,orCount);
 					break;
 			}
-				
-		
-	
 	}
 	/**
 	 * Remove the node that got removed from the shop

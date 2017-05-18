@@ -79,6 +79,7 @@ public class GraphFrame extends JFrame {
 		loadFile.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
 				loadFile();
+				theArea.setText(Shop.getShop());
 			}
 		});
 		file.add(loadFile);

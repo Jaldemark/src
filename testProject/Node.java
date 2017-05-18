@@ -5,7 +5,13 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.io.Serializable;
 
+/*<<<<<<< HEAD
 public interface Node extends Cloneable,Serializable {
+=======*/
+import app.Gate;
+
+public interface Node extends Cloneable,Serializable {
+/*>>>>>>> b527330150b41c5ab301ad96355a67078603cfb3*/
 
 	void draw(Graphics2D g2);
 
@@ -21,5 +27,8 @@ public interface Node extends Cloneable,Serializable {
 	double getY();
 	String getType();
 
-	Ellipse2D getGates(int n);
+	Gate getGates(int n);
+
+
+
 }

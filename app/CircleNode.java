@@ -9,7 +9,7 @@ import testProject.*;
 /**
  * A circular node that is filled with a color.
  */
-public class CircleNode implements Node {
+public abstract class CircleNode implements Node {
 
 	private double x;
 	private double y;
@@ -78,11 +78,11 @@ public class CircleNode implements Node {
 	}
 
 
-	@Override
+	/*@Override
 	public Ellipse2D getGates(int n) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	
 	

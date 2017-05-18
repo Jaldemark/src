@@ -12,7 +12,7 @@ import javax.swing.*;
 
 import testProject.*;
 
-public class SquareNode implements Node {
+public abstract class SquareNode implements Node {
 
 	int draggedAtX,draggedAtY;
 	public SquareNode(Color aColor) {
@@ -20,14 +20,8 @@ public class SquareNode implements Node {
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
-		color = aColor;
-	
-		 
+		color = aColor;	 
 	}
-
-	
-
-
 	public double getX(){
 		return x;
 	}
@@ -90,11 +84,11 @@ public class SquareNode implements Node {
 
 
 
-	@Override
+/*	@Override
 	public Ellipse2D getGates(int n) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 	
 	
 }

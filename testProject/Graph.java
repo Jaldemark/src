@@ -190,6 +190,10 @@ public abstract class Graph implements Serializable{
 	
 		return null;
 	}
+	public void updateShop(){
+		Shop.updateShop(nodes);
+		
+	}
 
 	
 

@@ -60,8 +60,8 @@ public class Shop {
 	}
 	public static void setShop(int and, int or){
 		if(and==0 && or==0){
-			andCount=0;
-			orCount=0;
+			andCount=and;
+			orCount=or;
 		}
 		for(int i=0;i<s.length;i++){
 			switch(i){
@@ -75,5 +75,20 @@ public class Shop {
 	}
 	public static void clearShop(){
 		 setShop(0,0);
+	}
+	public static void updateShop(ArrayList<Node> nodes) {
+		
+		for(Node n : nodes){
+			switch(n.getType()){
+				case("AndGate"):
+					andCount++;
+					break;
+				case("OrGate"):
+					orCount++;
+					break;
+			}
+		}
+		setShop(andCount,orCount);
+		
 	}
 }

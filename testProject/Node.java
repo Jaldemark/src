@@ -29,6 +29,7 @@ public interface Node extends Cloneable,Serializable {
 	int nrOfConn();
 
 	Gate getGates(int n);
+	public void moveAtCursor(double x, double y);
 
 
 

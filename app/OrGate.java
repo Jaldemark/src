@@ -46,6 +46,12 @@ public class OrGate implements Node {
 	public void setY(double y){
 		this.y=y;
 	}
+	@Override
+	public void moveAtCursor(double x,double y){
+
+		this.y=y;
+		this.x=x;
+	}
 	public Object clone() {
 		try {
 			return super.clone();
@@ -53,6 +59,7 @@ public class OrGate implements Node {
 			return null;
 		}
 	}
+
 	public void draw(Graphics2D g2) {
 		Rectangle2D square = new Rectangle2D.Double(x, y, size, size);
 		setGates();
@@ -102,6 +109,7 @@ public class OrGate implements Node {
 		// TODO Auto-generated method stub
 		return theCircles.length;
 	}
+
 
 	
 	

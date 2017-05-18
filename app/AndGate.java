@@ -63,10 +63,15 @@ public class AndGate implements Node {
 		theCircles[1]=cir1;
 		theCircles[2]=cir2;
 	}
+	@Override
+	public void moveAtCursor(double x,double y){
 
-
+		this.y=y;
+		this.x=x;
+	}
 	public void draw(Graphics2D g2) {
 		Rectangle2D square = new Rectangle2D.Double(x, y, size, size);
+		
 		setGates();
 		//Ellipse2D cir3 = new Ellipse2D.Double(x+20,y+14,5,5);
 		Color oldColor = g2.getColor();

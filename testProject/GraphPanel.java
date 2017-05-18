@@ -21,6 +21,8 @@ public class GraphPanel extends JComponent {
 	int xPointer;
 	int yPointer;
 	Boolean mouse=false;
+	double offSetX;
+	double offSetY;
 	
 	private Point2D thePointer;
 	private Rectangle2D theBounds;
@@ -39,11 +41,14 @@ public class GraphPanel extends JComponent {
 				Node theNode = graph.findNode(mousePoint);
 				Gate gate = graph.findGate(mousePoint);
 				Line theLine = graph.findLine(mousePoint);
+				
 				if(tool==null){
 					if(theNode!=null){
 						clickedObject = theNode;
 						thePointer = mousePoint;
 						theBounds = theNode.getBounds();
+						offSetX=mousePoint.getX()-theNode.getX();
+						offSetY=mousePoint.getY()-theNode.getY();
 					}
 					else if(gate!=null){
 						clickedObject = gate;
@@ -58,13 +63,11 @@ public class GraphPanel extends JComponent {
 				else  {
 					Node prototype = (Node) tool;
 					Node newNode = (Node) prototype.clone();
-					if(theNode==null&&!SwingUtilities.isRightMouseButton(event)){
-						
+					if(theNode==null&&!SwingUtilities.isRightMouseButton(event)){	
 						graph.add(newNode, mousePoint);	
 						Shop.addToShop(newNode);
 						GraphFrame.theArea.setText(Shop.getShop());
 					}
-
 					repaint();
 				}
 				if(theNode==null&&SwingUtilities.isRightMouseButton(event)) {
@@ -115,9 +118,6 @@ public class GraphPanel extends JComponent {
 								{
 									deleteLine();
 								}
-
-								
-		
 							});
 						}
 						pMenu.show(GraphPanel.this, event.getX(), event.getY());	
@@ -151,18 +151,22 @@ public class GraphPanel extends JComponent {
 						Object tool = toolBar.getSelectedTool();
 						Gate gate = graph.findGate(newPoint);
 						Node n = (Node)clickedObject;
+						double x = newPoint.getX();
+						double y= newPoint.getY();
 						if(tool==null){
 							if(theBounds != null&&!SwingUtilities.isRightMouseButton(event)){
 								if(graph.nodeContainsStart(n)!=null){
 									for(int i=0;i<n.nrOfConn();i++){
 										Gate g = n.getGates(i);
 										graph.nodeContainsEnd(g);
+										repaint();
 									}
 								}
 								else if(graph.nodeContainsEnd(n)!=null){
 									for(int i=0;i<n.nrOfConn();i++){
 										Gate g = n.getGates(i);
 										graph.nodeContainsEnd(g);
+										repaint();
 									}
 								}
 								else if(graph.nodeContainsEnd(n)!=null &&graph.nodeContainsStart(n)!=null){
@@ -170,24 +174,23 @@ public class GraphPanel extends JComponent {
 										Gate g = n.getGates(i);
 										graph.nodeContainsEnd(g);
 										graph.nodeContainsEnd(g);
+										repaint();
 									}
 								}
-									n.setY(newPoint.getY());
-									n.setX(newPoint.getX());
-									
+									n.moveAtCursor(x-offSetX,y-offSetY);
+									mouse = false;
 							}
 							else if(gate!=null||mouse){
 								
 								mouse = true;
-								if(gate!=null){
-								
+								if(gate!=null){					
 									gate.setLineCordinate(newPoint);
-									currentPointer = gate.getLineCordinate();
+									currentPointer = gate.getLineCordinate();									
 								}
 							}
 								
 								currentPointer = newPoint;
-							repaint();
+								repaint();
 							
 							}
 						}

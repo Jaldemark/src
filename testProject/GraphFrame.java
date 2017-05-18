@@ -26,6 +26,7 @@ public class GraphFrame extends JFrame {
 	private JScrollPane scrollPane;
 	private ToolBar toolBar;
 	static JTextArea theArea;
+	String test;
 	
 	JMenuBar menuBar;
 	JMenu menu, file;
@@ -66,23 +67,27 @@ public class GraphFrame extends JFrame {
 			}
 		});
 		menu.add(clearShop);
-		
+		theArea.setText(Shop.getShop());
 		saveFile = new JMenuItem("Save File");
 		saveFile.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
+				test = theArea.getText();
 				saveFile();
 			}
 		});
 		file.add(saveFile);
-		
+		theArea.setText(Shop.getShop());
 		loadFile = new JMenuItem("Load File");
 		loadFile.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
 				loadFile();
-				theArea.setText(Shop.getShop());
+				graph.updateShop();
+				
+				
 			}
 		});
 		file.add(loadFile);
+		theArea.setText(test);
 		
 			
 		
@@ -118,6 +123,7 @@ public class GraphFrame extends JFrame {
 	 * Let's the user save the file, name it and store it anywhere on the computer.
 	 * */
 	private void saveFile(){
+		test = Shop.getShop();
 		JFileChooser fileChooser = new JFileChooser();
 	      if (fileChooser.showSaveDialog(this)
 	         == JFileChooser.APPROVE_OPTION)
@@ -127,8 +133,10 @@ public class GraphFrame extends JFrame {
 	            File file = fileChooser.getSelectedFile();
 	            ObjectOutputStream out = new ObjectOutputStream(
 	               new FileOutputStream(file));
+	            
 	            out.writeObject(graph);
 	            out.writeObject(theArea);
+	            out.writeObject(test);
 	            out.close();
 	         }
 	         catch (IOException exception)
@@ -151,12 +159,17 @@ public class GraphFrame extends JFrame {
 	               new FileInputStream(file));
 	            graph = (Graph) in.readObject();
 	            theArea = (JTextArea) in.readObject();
+	            test = (String) in.readObject();
+	            theArea.setText(test);
 	            in.close();
 	            this.remove(scrollPane);
 	            this.remove(toolBar);
 	            setUpMenu();
 	            validate();
+	        	
 	            repaint();
+	            updateText(theArea,test);
+	            
 	         }
 	         catch (IOException exception)
 	         {
@@ -169,6 +182,12 @@ public class GraphFrame extends JFrame {
 	               exception);
 	         }
 	      }
+	      graph.updateShop();
+  		theArea.setText(Shop.getShop());
+	}
+	public void updateText(JTextArea a,String s){
+		theArea=a;
+		theArea.setText(s);
 	}
 	
 

@@ -112,6 +112,12 @@ public class Gate implements Node {
 	public double getCenterY(){
 		return cir.getCenterY();
 	}
+	@Override
+	public void moveAtCursor(double x, double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	public int nrOfConn() {
 		return theCircles.length;

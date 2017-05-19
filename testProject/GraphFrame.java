@@ -62,7 +62,7 @@ public class GraphFrame extends JFrame {
 		clearShop.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
 				
-			Shop.setShop(0,0);
+			Shop.clearShop();
 			theArea.setText(Shop.getShop());
 			}
 		});
@@ -160,6 +160,7 @@ public class GraphFrame extends JFrame {
 	            graph = (Graph) in.readObject();
 	            theArea = (JTextArea) in.readObject();
 	            test = (String) in.readObject();
+	            theArea.removeAll();
 	            theArea.setText(test);
 	            in.close();
 	            this.remove(scrollPane);
@@ -182,7 +183,7 @@ public class GraphFrame extends JFrame {
 	               exception);
 	         }
 	      }
-	      graph.updateShop();
+	     graph.updateShop();
   		theArea.setText(Shop.getShop());
 	}
 	public void updateText(JTextArea a,String s){

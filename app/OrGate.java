@@ -68,7 +68,7 @@ public class OrGate implements Node {
 		g2.fill(square);
 		g2.setColor(oldColor);
 		g2.draw(square);
-		g2.drawString(getType(), (int)square.getMinX(), (int)square.getY()-2);
+		g2.drawString("OG", (int)square.getCenterX()-8, (int)square.getCenterY()+3);
 		g2.fill(leftGate1.get());
 		g2.fill(leftGate2.get());
 		g2.draw(leftGate1.get());
@@ -108,7 +108,6 @@ public class OrGate implements Node {
 		
 	}
 	public int nrOfConn() {
-		// TODO Auto-generated method stub
 		return theGates.length;
 	}
 

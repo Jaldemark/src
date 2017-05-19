@@ -122,6 +122,7 @@ public class Gate implements Node {
 	public int nrOfConn() {
 		return theCircles.length;
 	}
+
 	
 	
 }

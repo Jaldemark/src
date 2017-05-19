@@ -100,5 +100,11 @@ public class Battery implements Node {
 	public int nrOfConn() {
 		return theCircles.length;
 	}
+	@Override
+	public void moveAtCursor(double x,double y){
+
+		this.y=y;
+		this.x=x;
+	}
 	
 }

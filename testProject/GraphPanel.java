@@ -210,14 +210,27 @@ public class GraphPanel extends JComponent {
 	}
 
 	public void paintComponent(Graphics g) {
+		
 		Graphics2D g2 = (Graphics2D) g;
-		graph.draw(g2);
+		g2.setColor(Color.BLACK);
+		
+		for (int i = 1; i < 100; i++) {
+			int x = i * 28;
+			for(int j=0; j < getSize().height;j+=10)
+				g2.drawLine(x, j, x, j+5);
+			
+		}
+		for (int i = 1; i < 100; i++) {
+			int y = i * 28;
+			for(int j=0; j < getSize().width;j+=10)
+				g2.drawLine(j, y, j+5, y);
+		}
 		if(mouse){
 			Line l = new Line(thePointer,currentPointer);
 			g2.setColor(Color.RED);
 			l.draw(g2);
 		}
-	
+         graph.draw(g2);
 	
 	}
 

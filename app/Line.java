@@ -8,6 +8,8 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 
+import testProject.Node;
+
 public class Line implements Serializable {
     public Point2D p1;
     public Point2D p2;
@@ -52,6 +54,17 @@ public class Line implements Serializable {
 	public void setConnectionPoints(Point2D p, Point2D q){
 		p1=p;
 		p2=q;
+	}
+	
+
+	public boolean checkIntersection(Line l){
+		Line2D l1 = new Line2D.Double(l.getStartPoint(),l.getEndPoint());
+		Line2D thisL = new Line2D.Double(this.getStartPoint(),this.getEndPoint());
+		return thisL.intersectsLine(l1);
+	}
+	public boolean checkIntersection(Node n){
+		Line2D thisL = new Line2D.Double(this.getStartPoint(),this.getEndPoint());
+		return thisL.contains(n.getBounds());
 	}
 	
 

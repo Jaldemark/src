@@ -115,9 +115,27 @@ public abstract class Graph implements Serializable{
 				
 	}
 	 public Line2D addLine(Point2D p1,Point2D p2) {
-	        this.lines.add(new Line(p1,p2));
-	        Line2D theLine =new Line2D.Double(p1,p2);
-	        return theLine;
+		 Line l = new Line (p1,p2);
+		 try{
+			 if(lines.size()==0){
+				 lines.add(new Line(p1,p2));
+		        	Line2D theLine =new Line2D.Double(p1,p2);
+		        	return theLine; 
+			 }
+			for(Line line : lines){
+				for(Node n : nodes)
+				if(!l.checkIntersection(line)){
+					lines.add(new Line(p1,p2));
+		        	Line2D theLine =new Line2D.Double(p1,p2);
+		        	return theLine;
+				}
+			}
+			return null;
+		 }
+		 catch(java.lang.NullPointerException e){
+			 return null;
+		 }
+
 	        
 	 }
 	 public Line checkSelected(Node a){
@@ -193,6 +211,43 @@ public abstract class Graph implements Serializable{
 	public void updateShop(){
 		Shop.updateShop(nodes);
 		
+	}
+
+	public boolean nodeContainsNode(Node newNode, Point2D p) {
+		double tx = p.getX()+30;
+		double bx = p.getX();
+		double ty = p.getY();
+		double by = p.getY()+30;
+		
+		for(Node n : nodes){
+			if(n.getBounds().contains(tx, by)){
+				return true;
+			}
+			else if(n.getBounds().contains(tx,ty)){
+				return true;
+			}
+			else if(n.getBounds().contains(bx,by)){
+				return true;
+			}
+		}
+		//p.setLocation(x-30,ty);
+		return false;
+		
+	}
+	public void checkIntersection(){
+		
+		try{
+			for(Line l : lines){
+				for(Line l2 : lines){
+					if(l!=l2&&l.checkIntersection(l2)){
+							lines.remove(l2);
+							
+					}	
+				}
+			}
+		}
+		catch(java.util.ConcurrentModificationException e){
+		}
 	}
 
 	

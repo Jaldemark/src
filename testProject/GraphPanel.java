@@ -63,10 +63,12 @@ public class GraphPanel extends JComponent {
 				else  {
 					Node prototype = (Node) tool;
 					Node newNode = (Node) prototype.clone();
-					if(theNode==null&&!SwingUtilities.isRightMouseButton(event)){	
-						graph.add(newNode, mousePoint);	
-						Shop.addToShop(newNode);
-						GraphFrame.theArea.setText(Shop.getShop());
+					if(theNode==null&&!SwingUtilities.isRightMouseButton(event)){
+						if(!graph.nodeContainsNode(newNode,mousePoint)){
+							graph.add(newNode, mousePoint);	
+							Shop.addToShop(newNode);
+							GraphFrame.theArea.setText(Shop.getShop());
+						}
 					}
 					repaint();
 				}
@@ -130,7 +132,7 @@ public class GraphPanel extends JComponent {
 				public void mouseReleased(MouseEvent event){
 					Point2D mousePoint = event.getPoint();
 					Gate gate = graph.findGate(mousePoint);
-					if(gate!=null){
+					if(gate!=null){				
 						graph.addLine(thePointer,currentPointer);
 					}
 					else{
@@ -145,58 +147,60 @@ public class GraphPanel extends JComponent {
 				}
 			});
 				
-				addMouseMotionListener(new MouseMotionAdapter(){
-					public void mouseDragged(MouseEvent event){
-						Point2D newPoint = event.getPoint();
-						Object tool = toolBar.getSelectedTool();
-						Gate gate = graph.findGate(newPoint);
-						Node n = (Node)clickedObject;
-						double x = newPoint.getX();
-						double y= newPoint.getY();
-						if(tool==null){
-							if(theBounds != null&&!SwingUtilities.isRightMouseButton(event)){
-								if(graph.nodeContainsStart(n)!=null){
-									for(int i=0;i<n.nrOfConn();i++){
-										Gate g = n.getGates(i);
-										graph.nodeContainsEnd(g);
-										repaint();
-									}
-								}
-								else if(graph.nodeContainsEnd(n)!=null){
-									for(int i=0;i<n.nrOfConn();i++){
-										Gate g = n.getGates(i);
-										graph.nodeContainsEnd(g);
-										repaint();
-									}
-								}
-								else if(graph.nodeContainsEnd(n)!=null &&graph.nodeContainsStart(n)!=null){
-									for(int i=0;i<n.nrOfConn();i++){
-										Gate g = n.getGates(i);
-										graph.nodeContainsEnd(g);
-										graph.nodeContainsEnd(g);
-										repaint();
-									}
-								}
-									n.moveAtCursor(x-offSetX,y-offSetY);
-									mouse = false;
-								
-							}
-							else if(gate!=null||mouse){
-								
-								mouse = true;
-								if(gate!=null){					
-									gate.setLineCordinate(newPoint);
-									currentPointer = gate.getLineCordinate();									
-								}
-							}
-								
-								currentPointer = newPoint;
+		addMouseMotionListener(new MouseMotionAdapter(){
+			public void mouseDragged(MouseEvent event){
+				Point2D newPoint = event.getPoint();
+				Object tool = toolBar.getSelectedTool();
+				Gate gate = graph.findGate(newPoint);
+				Node n = (Node)clickedObject;
+				double x = newPoint.getX();
+				double y= newPoint.getY();
+				if(tool==null){
+					if(theBounds != null&&!SwingUtilities.isRightMouseButton(event)){
+						if(graph.nodeContainsStart(n)!=null){
+							for(int i=0;i<n.nrOfConn();i++){
+								Gate g = n.getGates(i);
+								graph.nodeContainsStart(g);
+								graph.checkIntersection();
 								repaint();
-							
 							}
 						}
-					});
+						else if(graph.nodeContainsEnd(n)!=null){
+							for(int i=0;i<n.nrOfConn();i++){
+								Gate g = n.getGates(i);
+								graph.nodeContainsEnd(g);
+								graph.checkIntersection();
+								repaint();
+							}
+						}
+						else if(graph.nodeContainsEnd(n)!=null &&graph.nodeContainsStart(n)!=null){
+							for(int i=0;i<n.nrOfConn();i++){
+								Gate g = n.getGates(i);
+								graph.nodeContainsStart(g);
+								graph.nodeContainsEnd(g);
+								graph.checkIntersection();
+								repaint();
+							}
+						}
+							n.moveAtCursor(x-offSetX,y-offSetY);
+							mouse = false;
 						
+					}
+					else if(gate!=null||mouse){
+						
+						mouse = true;
+						if(gate!=null){					
+							gate.setLineCordinate(newPoint);
+							currentPointer = gate.getLineCordinate();									
+						}
+					}
+						
+						currentPointer = newPoint;
+						repaint();
+					
+					}
+				}
+			});		
 			}
 
 	private void deleteNode() {
@@ -208,7 +212,6 @@ public class GraphPanel extends JComponent {
 		repaint();
 		
 	}
-
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		graph.draw(g2);

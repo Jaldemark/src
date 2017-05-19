@@ -7,10 +7,9 @@ import testProject.Node;
 
 public class Shop {
 
-	static String[] s = {"And Gates: ", "Or Gates: "};
+	static String[] s = {"And Gates: ", "Or Gates: ","Resistors: ","Batterys: "};
 	static int[] itemCount = {0,0};//Array with amount of items
 	static int orCount=0;
-	static int currentSize=1;	//How many different items there are
 	static int andCount=0;
 	static int resistorCount =0;
 	static int batteryCount =0;
@@ -21,14 +20,23 @@ public class Shop {
 	 * @param r The Node added to the grid
 	 */
 	public static void addToShop(Node a){		
-			switch(a.getType()){
-				case "AndGate":	andCount++; 
-								setShop(andCount, orCount);
-					break;
-				case "OrGate": 	orCount++;
-								setShop(andCount,orCount);
-					break;
-			}
+		switch(a.getType()){
+		case "AndGate": 
+			andCount++;
+			setShop(andCount, orCount,resistorCount,batteryCount);
+			break;
+		case "OrGate": 	orCount++;
+			setShop(andCount, orCount,resistorCount, batteryCount);
+			break;
+		case "Resistor":resistorCount++;
+			setShop(andCount, orCount,resistorCount, batteryCount);
+			break;
+		case "Battery": batteryCount++;
+			setShop(andCount, orCount,resistorCount, batteryCount);
+			break;
+			
+		
+		}
 	}
 	/**
 	 * Remove the node that got removed from the shop
@@ -37,13 +45,24 @@ public class Shop {
 	public static void removeFromShop(Node a){
 		
 		switch(a.getType()){
-		case "AndGate": andCount--;
-						setShop(andCount, orCount);
-						break;
-		case "OrGate": 	orCount--;
-						setShop(andCount, orCount);
-						break;
-		case "Resistor":	
+		case "AndGate": 
+			andCount--;
+			setShop(andCount, orCount,resistorCount,batteryCount);
+			break;
+		case "OrGate": 	
+			orCount--;
+			setShop(andCount, orCount,resistorCount, batteryCount);
+			break;
+		case "Resistor":
+			resistorCount--;
+			setShop(andCount, orCount,resistorCount, batteryCount);
+			break;
+		case "Battery": 
+			batteryCount--;
+			setShop(andCount, orCount,resistorCount, batteryCount);
+			break;
+			
+		
 		}
 	}
 	/**
@@ -61,23 +80,31 @@ public class Shop {
 		}
 		return all;
 	}
-	public static void setShop(int and, int or){
-		if(and==0 && or==0){
+	public static void setShop(int and, int or, int resistor, int battery){
+		//if(and==0 && or==0 ){
 			andCount=and;
 			orCount=or;
-		}
+			resistorCount=resistor;
+			batteryCount=battery;
+		//}
 		for(int i=0;i<s.length;i++){
 			switch(i){
 				case 0: 
-						s[0]="And Gate: " + and;
+					s[0]="And Gate: " + and;
 					
 				case 1:	
-						s[1]="Or Gates: " + or;
+					s[1]="Or Gates: " + or;
+				
+				case 2: 
+					s[2]="Resistors: " + resistor;
+						
+				case 3: 
+					s[3]="Batterys: " + battery;
 			}
 		}
 	}
 	public static void clearShop(){
-		 setShop(0,0);
+		 setShop(0,0,0,0);
 	}
 	public static void updateShop(ArrayList<Node> nodes) {
 		
@@ -89,9 +116,16 @@ public class Shop {
 				case("OrGate"):
 					orCount++;
 					break;
+				case("Resistor"):
+					resistorCount++;
+					break;
+				case("Battery"):
+					batteryCount++;
+					break;
+				
 			}
 		}
-		setShop(andCount,orCount);
+		setShop(andCount,orCount,resistorCount,batteryCount);
 		
 	}
 }

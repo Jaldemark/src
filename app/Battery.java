@@ -71,7 +71,7 @@ public class Battery implements Node {
 		g2.fill(square);
 		g2.setColor(oldColor);
 		g2.draw(square);
-		g2.drawString(getType(), (int)square.getMinX(), (int)square.getY()-2);
+		g2.drawString("B", (int)square.getCenterX()-4, (int)square.getCenterY()+3);
 		g2.fill(leftGate.get());
 		g2.draw(rightGate.get());
 		g2.draw(leftGate.get());

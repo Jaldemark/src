@@ -14,10 +14,10 @@ import testProject.*;
 
 public class OrGate implements Node {
 
-	Gate cir;
-	Gate cir1;
-	Gate cir2;
-	Gate[] theCircles = {cir,cir1,cir2};
+	Gate leftGate1;
+	Gate leftGate2;
+	Gate rightGate;
+	Gate[] theGates = {leftGate1,leftGate2,rightGate};
 	int draggedAtX,draggedAtY;
 	
 	private double x;
@@ -68,10 +68,12 @@ public class OrGate implements Node {
 		g2.fill(square);
 		g2.setColor(oldColor);
 		g2.draw(square);
-		g2.fill(cir.get());
-		g2.draw(cir.get());
-		g2.draw(cir1.get());
-		g2.draw(cir2.get());
+		g2.drawString(getType(), (int)square.getMinX(), (int)square.getY()-2);
+		g2.fill(leftGate1.get());
+		g2.fill(leftGate2.get());
+		g2.draw(leftGate1.get());
+		g2.draw(leftGate2.get());
+		g2.draw(rightGate.get());
 	}
 
 	public void translate(double dx, double dy) {
@@ -91,23 +93,23 @@ public class OrGate implements Node {
 		return square.contains(thePoint);
 	}
 	public void setGates(){
-		cir  = new Gate(Color.BLACK, x-5,y+5);
-		cir1 = new Gate(Color.black,x-5,y+20);
-		cir2 = new Gate(Color.BLACK,x+30,y+12);
-		theCircles[0]=cir;
-		theCircles[1]=cir1;
-		theCircles[2]=cir2;
+		leftGate1  = new Gate(Color.BLACK, x-5,y+5);
+		leftGate2 = new Gate(Color.black,x-5,y+20);
+		rightGate = new Gate(Color.BLACK,x+30,y+12);
+		theGates[0]=leftGate1;
+		theGates[1]=leftGate2;
+		theGates[2]=rightGate;
 	}
 	
 	@Override
 	public Gate getGates(int n){
 		setGates();
-		return theCircles[n];
+		return theGates[n];
 		
 	}
 	public int nrOfConn() {
 		// TODO Auto-generated method stub
-		return theCircles.length;
+		return theGates.length;
 	}
 
 

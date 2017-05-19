@@ -14,9 +14,9 @@ import javax.swing.*;
 public class Battery implements Node {
 	int draggedAtX,draggedAtY;
 	 
-	Gate cir;
-	Gate cir1;
-	Gate[] theCircles = {cir,cir1};
+	Gate leftGate;
+	Gate rightGate;
+	Gate[] theGates = {leftGate,rightGate};
 	private double x;
 	private double y;
 	private double size;
@@ -53,18 +53,17 @@ public class Battery implements Node {
 		}
 	}
 	public void setGates(){
-		cir  = new Gate(Color.BLACK, x-5,y+12);
-		cir1 = new Gate(Color.black,x+30,y+12);
+		leftGate = new Gate(Color.BLACK, x-5,y+12);
+		rightGate = new Gate(Color.black,x+30,y+12);
 		
-		theCircles[0]=cir;
-		theCircles[1]=cir1;
+		theGates[0]=leftGate;
+		theGates[1]=rightGate;
 	}
 
 
 	public void draw(Graphics2D g2) {
 		Rectangle2D square = new Rectangle2D.Double(x, y, size, size);
 		setGates();
-		//Ellipse2D cir3 = new Ellipse2D.Double(x+20,y+14,5,5);
 		Color oldColor = g2.getColor();
 		g2.setColor(color);
 		g2.setStroke(new BasicStroke(1));
@@ -72,9 +71,10 @@ public class Battery implements Node {
 		g2.fill(square);
 		g2.setColor(oldColor);
 		g2.draw(square);
-		g2.fill(cir.get());
-		g2.draw(cir.get());
-		g2.draw(cir1.get());
+		g2.drawString(getType(), (int)square.getMinX(), (int)square.getY()-2);
+		g2.fill(leftGate.get());
+		g2.draw(rightGate.get());
+		g2.draw(leftGate.get());
 	}
 
 	public void translate(double dx, double dy) {
@@ -94,11 +94,11 @@ public class Battery implements Node {
 	@Override
 	public Gate getGates(int n){
 		setGates();
-		return theCircles[n];
+		return theGates[n];
 		
 	}
 	public int nrOfConn() {
-		return theCircles.length;
+		return theGates.length;
 	}
 	@Override
 	public void moveAtCursor(double x,double y){

@@ -12,6 +12,8 @@ public class Shop {
 	static int orCount=0;
 	static int currentSize=1;	//How many different items there are
 	static int andCount=0;
+	static int resistorCount =0;
+	static int batteryCount =0;
 	static int count;
 
 	/**
@@ -41,6 +43,7 @@ public class Shop {
 		case "OrGate": 	orCount--;
 						setShop(andCount, orCount);
 						break;
+		case "Resistor":	
 		}
 	}
 	/**

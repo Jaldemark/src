@@ -16,10 +16,10 @@ public class AndGate implements Node {
 
 	int draggedAtX,draggedAtY;
 	 
-	Gate cir;
-	Gate cir1;
-	Gate cir2;
-	Gate[] theCircles = {cir,cir1,cir2};
+	Gate leftGate1;
+	Gate leftGate2;
+	Gate rightGate;
+	Gate[] theGates = {leftGate1,leftGate2,rightGate};
 	private double x;
 	private double y;
 	private double size;
@@ -56,12 +56,12 @@ public class AndGate implements Node {
 		}
 	}
 	public void setGates(){
-		cir  = new Gate(Color.BLACK, x-5,y+5);
-		cir1 = new Gate(Color.black,x-5,y+20);
-		cir2 = new Gate(Color.BLACK,x+30,y+12);
-		theCircles[0]=cir;
-		theCircles[1]=cir1;
-		theCircles[2]=cir2;
+		leftGate1  = new Gate(Color.BLACK, x-5,y+5);
+		leftGate2 = new Gate(Color.black,x-5,y+20);
+		rightGate = new Gate(Color.BLACK,x+30,y+12);
+		theGates[0]=leftGate1;
+		theGates[1]=leftGate2;
+		theGates[2]=rightGate;
 	}
 	@Override
 	public void moveAtCursor(double x,double y){
@@ -73,7 +73,7 @@ public class AndGate implements Node {
 		Rectangle2D square = new Rectangle2D.Double(x, y, size, size);
 		
 		setGates();
-		//Ellipse2D cir3 = new Ellipse2D.Double(x+20,y+14,5,5);
+		//Ellipse2D leftGate13 = new Ellipse2D.Double(x+20,y+14,5,5);
 		Color oldColor = g2.getColor();
 		g2.setColor(color);
 		g2.setStroke(new BasicStroke(1));
@@ -81,10 +81,12 @@ public class AndGate implements Node {
 		g2.fill(square);
 		g2.setColor(oldColor);
 		g2.draw(square);
-		g2.fill(cir.get());
-		g2.draw(cir.get());
-		g2.draw(cir1.get());
-		g2.draw(cir2.get());
+		g2.drawString(getType(), (int)square.getMinX(), (int)square.getY()-2);
+		g2.fill(leftGate1.get());
+		g2.fill(leftGate2.get());
+		g2.draw(leftGate1.get());
+		g2.draw(leftGate2.get());
+		g2.draw(rightGate.get());
 	}
 
 	public void translate(double dx, double dy) {
@@ -104,11 +106,11 @@ public class AndGate implements Node {
 	@Override
 	public Gate getGates(int n){
 		setGates();
-		return theCircles[n];
+		return theGates[n];
 		
 	}
 	
 	public int nrOfConn() {
-		return theCircles.length;
+		return theGates.length;
 	}
 }

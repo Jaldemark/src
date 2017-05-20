@@ -1,11 +1,12 @@
 package app;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import testProject.Node;
 
-public class Shop {
+public class Shop implements Serializable {
 
 	static String[] s = {"And Gates: ", "Or Gates: ","Resistors: ","Batterys: "};
 	static int[] itemCount = {0,0};//Array with amount of items

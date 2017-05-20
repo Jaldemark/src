@@ -168,9 +168,9 @@ public class GraphFrame extends JFrame {
 	            setUpMenu();
 	            validate();
 	        	
-	            repaint();
-	            updateText(theArea,test);
 	            
+	            updateText(theArea,test);
+	            repaint();
 	         }
 	         catch (IOException exception)
 	         {

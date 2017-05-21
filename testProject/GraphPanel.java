@@ -83,6 +83,7 @@ public class GraphPanel extends JComponent {
 						{
 							Shop.clearShop();
 							GraphFrame.theArea.setText(Shop.getShop());
+							GraphFrame.theArea.removeAll();
 							graph.deleteAll();
 							repaint();
 						}
@@ -105,8 +106,9 @@ public class GraphPanel extends JComponent {
 								public void actionPerformed(ActionEvent event)
 								{
 									Shop.removeFromShop(theNode);
-									GraphFrame.theArea.setText(Shop.getShop());
+									
 									deleteNode();
+									GraphFrame.theArea.setText(Shop.getShop());
 								}
 		
 							});

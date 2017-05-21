@@ -115,6 +115,7 @@ public class GraphFrame extends JFrame {
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(new JPanel());
 		this.add(scrollPane,BorderLayout.CENTER);
+		graph.updateShop();
 		
 		
 		
@@ -146,6 +147,9 @@ public class GraphFrame extends JFrame {
 	         }
 	      }
 	}
+	/*
+	 * A function for loading of files, also clears the "working" project and replaces it with the loaded one.
+	 * */
 	private void loadFile(){
 		JFileChooser fileChooser = new JFileChooser();
 	      int r = fileChooser.showOpenDialog(this);
@@ -157,19 +161,32 @@ public class GraphFrame extends JFrame {
 	            File file = fileChooser.getSelectedFile();
 	            ObjectInputStream in = new ObjectInputStream(
 	               new FileInputStream(file));
+	           
 	            graph = (Graph) in.readObject();
 	            theArea = (JTextArea) in.readObject();
-	            test = (String) in.readObject();
-	            theArea.removeAll();
-	            theArea.setText(test);
+	            //test = (String) in.readObject();
+	            
+	           
+	          //  repaint(); 
+	            
+	            //theArea.update(getGraphics());
+	            
 	            in.close();
+	            //theArea.removeAll();
+	            //panel.removeAll();
 	            this.remove(scrollPane);
 	            this.remove(toolBar);
-	            setUpMenu();
-	            validate();
-	        	
+	            this.remove(theArea);
 	            
-	            updateText(theArea,test);
+	            
+	            //this.remove(theArea);
+	            //graph.updateShop();
+	            setUpMenu();
+	            
+	            validate();
+	            
+	            //graph.updateShop();
+	            //updateText(theArea,test);
 	            repaint();
 	         }
 	         catch (IOException exception)

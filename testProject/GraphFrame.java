@@ -82,12 +82,10 @@ public class GraphFrame extends JFrame {
 			public void actionPerformed(ActionEvent event){
 				loadFile();
 				graph.updateShop();
-				
-				
 			}
 		});
 		file.add(loadFile);
-		theArea.setText(test);
+		//theArea.setText(test);
 		
 			
 		
@@ -136,8 +134,7 @@ public class GraphFrame extends JFrame {
 	               new FileOutputStream(file));
 	            
 	            out.writeObject(graph);
-	            out.writeObject(theArea);
-	            out.writeObject(test);
+	            //out.writeObject(theArea);
 	            out.close();
 	         }
 	         catch (IOException exception)
@@ -163,14 +160,16 @@ public class GraphFrame extends JFrame {
 	               new FileInputStream(file));
 	           
 	            graph = (Graph) in.readObject();
-	            theArea = (JTextArea) in.readObject();
-	            //test = (String) in.readObject();
+	          //  theArea = (JTextArea) in.readObject();
+//<<<<<<< HEAD
 	            
 	           
 	          //  repaint(); 
 	            
 	            //theArea.update(getGraphics());
 	            
+//=======
+//>>>>>>> 8c99112405dabccad7fc644f0ff930c58a925a92
 	            in.close();
 	            //theArea.removeAll();
 	            //panel.removeAll();
@@ -185,7 +184,10 @@ public class GraphFrame extends JFrame {
 	            
 	            validate();
 	            
+//<<<<<<< HEAD
 	            //graph.updateShop();
+//=======
+//>>>>>>> 8c99112405dabccad7fc644f0ff930c58a925a92
 	            //updateText(theArea,test);
 	            repaint();
 	         }
@@ -200,7 +202,7 @@ public class GraphFrame extends JFrame {
 	               exception);
 	         }
 	      }
-	     graph.updateShop();
+	    graph.updateShop();
   		theArea.setText(Shop.getShop());
 	}
 	public void updateText(JTextArea a,String s){

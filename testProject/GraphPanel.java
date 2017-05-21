@@ -66,7 +66,8 @@ public class GraphPanel extends JComponent {
 					if(theNode==null&&!SwingUtilities.isRightMouseButton(event)){
 						if(!graph.nodeContainsNode(newNode,mousePoint)){
 							graph.add(newNode, mousePoint);	
-							Shop.addToShop(newNode);
+							//Shop.addToShop(newNode);
+							graph.updateShop();
 							GraphFrame.theArea.setText(Shop.getShop());
 						}
 					}
@@ -105,12 +106,14 @@ public class GraphPanel extends JComponent {
 							{
 								public void actionPerformed(ActionEvent event)
 								{
+//<<<<<<< HEAD
 									Shop.removeFromShop(theNode);
-									
+//=======								
 									deleteNode();
-									GraphFrame.theArea.setText(Shop.getShop());
+									graph.updateShop();
+									GraphFrame.theArea.setText(Shop.getShop());									
+//>>>>>>> 8c99112405dabccad7fc644f0ff930c58a925a92
 								}
-		
 							});
 						}
 						else if(theLine!=null){
@@ -134,18 +137,23 @@ public class GraphPanel extends JComponent {
 				public void mouseReleased(MouseEvent event){
 					Point2D mousePoint = event.getPoint();
 					Gate gate = graph.findGate(mousePoint);
+					Node newNode = graph.findNode(mousePoint);
 					if(gate!=null){				
 						graph.addLine(thePointer,currentPointer);
+						graph.checkIntersection();
+						
+						
 					}
-					else{
+					else if(graph.placedOnNode(newNode)){
+					//	deleteNode();
+					}
+						thePointer = null;
+						currentPointer = null;
+						theBounds = null;
+						mouse = false;
+						
+						repaint();
 					
-					thePointer = null;
-					currentPointer = null;
-					theBounds = null;
-					mouse = false;
-					}
-					repaint();
-
 				}
 			});
 				

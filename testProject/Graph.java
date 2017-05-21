@@ -233,7 +233,7 @@ public abstract class Graph implements Serializable{
 							return true;
 						}
 						else if(l.checkIntersection(n)){
-							lines.remove(l2);
+							lines.remove(l);
 							return true;
 						}
 					}	
@@ -251,7 +251,7 @@ public abstract class Graph implements Serializable{
 
 		try{	
 			for(Node n : nodes){
-				if(nodes.size()>1&&a.getBounds().intersects(n.getBounds())&&n!=a)
+				if(nodes.size()>1&&(n.getBounds().intersects(a.getBounds()))&&n!=a)
 					nodes.remove(n);
 					return true;
 			}

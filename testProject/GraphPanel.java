@@ -136,7 +136,7 @@ public class GraphPanel extends JComponent {
 					Node newNode = graph.findNode(mousePoint);
 					if(gate!=null){				
 						graph.addLine(thePointer,currentPointer);
-						//graph.checkIntersection();
+						graph.checkIntersection();
 						
 					}
 					else if(graph.placedOnNode(newNode)){
@@ -162,7 +162,7 @@ public class GraphPanel extends JComponent {
 				double y= newPoint.getY();
 				if(tool==null){
 					if(theBounds != null&&!SwingUtilities.isRightMouseButton(event)){
-						if(graph.nodeContainsStart(n)!=null){
+						if(graph.nodeContainsStart(n)!=null&&graph.nodeContainsEnd(n)==null){
 							for(int i=0;i<n.nrOfConn();i++){
 								Gate g = n.getGates(i);
 								graph.nodeContainsStart(g);
@@ -170,7 +170,7 @@ public class GraphPanel extends JComponent {
 								repaint();
 							}
 						}
-						else if(graph.nodeContainsEnd(n)!=null){
+						else if(graph.nodeContainsEnd(n)!=null&&graph.nodeContainsStart(n)==null){
 							for(int i=0;i<n.nrOfConn();i++){
 								Gate g = n.getGates(i);
 								graph.nodeContainsEnd(g);
@@ -189,7 +189,6 @@ public class GraphPanel extends JComponent {
 						}
 							n.moveAtCursor(x-offSetX,y-offSetY);
 							mouse = false;
-						
 					}
 					else if(gate!=null||mouse){
 						

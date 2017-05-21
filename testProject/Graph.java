@@ -102,18 +102,7 @@ public abstract class Graph implements Serializable{
 				lines.remove(lines.get(0));
 		}
 	}
-	public boolean checkOverPrint(Node a){
-		Node newNode;
-		Rectangle2D bounds;
-		for(int i=0;i<nodes.size();i++){
-			newNode = nodes.get(i);
-			bounds = newNode.getBounds();
-			
-		return true;	
-		}
-			return false;
-				
-	}
+
 	 public Line2D addLine(Point2D p1,Point2D p2) {
 		 Line l = new Line (p1,p2);
 		 try{
@@ -230,23 +219,46 @@ public abstract class Graph implements Serializable{
 				return true;
 			}
 		}
-		//p.setLocation(x-30,ty);
 		return false;
 		
 	}
-	public void checkIntersection(){
+	public boolean checkIntersection(){
 		
 		try{
 			for(Line l : lines){
 				for(Line l2 : lines){
-					if(l!=l2&&l.checkIntersection(l2)){
+					for(Node n : nodes){
+						if(l!=l2&&(l.checkIntersection(l2))){
 							lines.remove(l2);
-							
+							return true;
+						}
+						else if(l.checkIntersection(n)){
+							lines.remove(l2);
+							return true;
+						}
 					}	
 				}
 			}
+			return false;
+			
 		}
 		catch(java.util.ConcurrentModificationException e){
+			return false;
+		}
+	}
+
+	public boolean placedOnNode(Node a) {
+
+		try{	
+			for(Node n : nodes){
+				if(nodes.size()>1&&a.getBounds().intersects(n.getBounds())&&n!=a)
+					nodes.remove(n);
+					return true;
+			}
+			return false;
+		}
+		catch(java.lang.NullPointerException e){
+			return false;
 		}
 	}
 

@@ -26,7 +26,8 @@ public class Shop implements Serializable {
 			andCount++;
 			setShop(andCount, orCount,resistorCount,batteryCount);
 			break;
-		case "OrGate": 	orCount++;
+		case "OrGate": 	
+			orCount++;
 			setShop(andCount, orCount,resistorCount, batteryCount);
 			break;
 		case "Resistor":resistorCount++;
@@ -108,7 +109,10 @@ public class Shop implements Serializable {
 		 setShop(0,0,0,0);
 	}
 	public static void updateShop(ArrayList<Node> nodes) {
-		
+		andCount=0;
+		orCount=0;
+		resistorCount=0;
+		batteryCount=0;
 		for(Node n : nodes){
 			switch(n.getType()){
 				case("AndGate"):

@@ -87,7 +87,7 @@ public class GraphFrame extends JFrame {
 			}
 		});
 		file.add(loadFile);
-		theArea.setText(test);
+		//theArea.setText(test);
 		
 			
 		
@@ -160,8 +160,6 @@ public class GraphFrame extends JFrame {
 	            graph = (Graph) in.readObject();
 	            theArea = (JTextArea) in.readObject();
 	            test = (String) in.readObject();
-	            theArea.removeAll();
-	            theArea.setText(test);
 	            in.close();
 	            this.remove(scrollPane);
 	            this.remove(toolBar);
@@ -169,7 +167,7 @@ public class GraphFrame extends JFrame {
 	            validate();
 	        	
 	            
-	            updateText(theArea,test);
+	            //updateText(theArea,test);
 	            repaint();
 	         }
 	         catch (IOException exception)
@@ -183,7 +181,7 @@ public class GraphFrame extends JFrame {
 	               exception);
 	         }
 	      }
-	     graph.updateShop();
+	    graph.updateShop();
   		theArea.setText(Shop.getShop());
 	}
 	public void updateText(JTextArea a,String s){

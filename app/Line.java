@@ -64,7 +64,8 @@ public class Line implements Serializable {
 	}
 	public boolean checkIntersection(Node n){
 		Line2D thisL = new Line2D.Double(this.getStartPoint(),this.getEndPoint());
-		return thisL.contains(n.getBounds());
+		boolean b = thisL.intersects(n.getBounds());
+		return b;
 	}
 	
 

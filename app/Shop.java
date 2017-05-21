@@ -9,7 +9,7 @@ import testProject.Node;
 public class Shop implements Serializable {
 
 	static String[] s = {"And Gates: ", "Or Gates: ","Resistors: ","Batterys: "};
-	static int[] itemCount = {0,0};//Array with amount of items
+	static int[] itemCount = {0,0,0,0};//Array with amount of items
 	static int orCount=0;
 	static int andCount=0;
 	static int resistorCount =0;
@@ -109,10 +109,14 @@ public class Shop implements Serializable {
 		 setShop(0,0,0,0);
 	}
 	public static void updateShop(ArrayList<Node> nodes) {
+//<<<<<<< HEAD
+		clearShop(); // kanske såhär??
+/*=======
 		andCount=0;
 		orCount=0;
 		resistorCount=0;
 		batteryCount=0;
+>>>>>>> 8c99112405dabccad7fc644f0ff930c58a925a92*/
 		for(Node n : nodes){
 			switch(n.getType()){
 				case("AndGate"):

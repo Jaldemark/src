@@ -84,6 +84,7 @@ public class GraphPanel extends JComponent {
 						{
 							Shop.clearShop();
 							GraphFrame.theArea.setText(Shop.getShop());
+							GraphFrame.theArea.removeAll();
 							graph.deleteAll();
 							repaint();
 						}
@@ -105,10 +106,13 @@ public class GraphPanel extends JComponent {
 							{
 								public void actionPerformed(ActionEvent event)
 								{
-									//Shop.removeFromShop(theNode);
+//<<<<<<< HEAD
+									Shop.removeFromShop(theNode);
+//=======								
 									deleteNode();
 									graph.updateShop();
 									GraphFrame.theArea.setText(Shop.getShop());									
+//>>>>>>> 8c99112405dabccad7fc644f0ff930c58a925a92
 								}
 							});
 						}
@@ -137,6 +141,10 @@ public class GraphPanel extends JComponent {
 					if(gate!=null){				
 						graph.addLine(thePointer,currentPointer);
 						graph.checkIntersection();
+/*<<<<<<< HEAD
+=======
+						
+>>>>>>> b34e82863e9cf9991a5ed96d6d74c45367a80aeb*/
 						
 					}
 					else if(graph.placedOnNode(newNode)){

@@ -82,8 +82,6 @@ public class GraphFrame extends JFrame {
 			public void actionPerformed(ActionEvent event){
 				loadFile();
 				graph.updateShop();
-				
-				
 			}
 		});
 		file.add(loadFile);
@@ -115,6 +113,7 @@ public class GraphFrame extends JFrame {
 		this.add(scrollPane, BorderLayout.CENTER);
 		this.add(new JPanel());
 		this.add(scrollPane,BorderLayout.CENTER);
+		graph.updateShop();
 		
 		
 		
@@ -135,8 +134,7 @@ public class GraphFrame extends JFrame {
 	               new FileOutputStream(file));
 	            
 	            out.writeObject(graph);
-	            out.writeObject(theArea);
-	            out.writeObject(test);
+	            //out.writeObject(theArea);
 	            out.close();
 	         }
 	         catch (IOException exception)
@@ -146,6 +144,9 @@ public class GraphFrame extends JFrame {
 	         }
 	      }
 	}
+	/*
+	 * A function for loading of files, also clears the "working" project and replaces it with the loaded one.
+	 * */
 	private void loadFile(){
 		JFileChooser fileChooser = new JFileChooser();
 	      int r = fileChooser.showOpenDialog(this);
@@ -157,16 +158,36 @@ public class GraphFrame extends JFrame {
 	            File file = fileChooser.getSelectedFile();
 	            ObjectInputStream in = new ObjectInputStream(
 	               new FileInputStream(file));
+	           
 	            graph = (Graph) in.readObject();
-	            theArea = (JTextArea) in.readObject();
-	            test = (String) in.readObject();
+	          //  theArea = (JTextArea) in.readObject();
+//<<<<<<< HEAD
+	            
+	           
+	          //  repaint(); 
+	            
+	            //theArea.update(getGraphics());
+	            
+//=======
+//>>>>>>> 8c99112405dabccad7fc644f0ff930c58a925a92
 	            in.close();
+	            //theArea.removeAll();
+	            //panel.removeAll();
 	            this.remove(scrollPane);
 	            this.remove(toolBar);
-	            setUpMenu();
-	            validate();
-	        	
+	            this.remove(theArea);
 	            
+	            
+	            //this.remove(theArea);
+	            //graph.updateShop();
+	            setUpMenu();
+	            
+	            validate();
+	            
+//<<<<<<< HEAD
+	            //graph.updateShop();
+//=======
+//>>>>>>> 8c99112405dabccad7fc644f0ff930c58a925a92
 	            //updateText(theArea,test);
 	            repaint();
 	         }

@@ -48,6 +48,9 @@ public abstract class Graph implements Serializable{
 
 	public abstract Node[] getNodePrototypes();
 
+	public ArrayList<Node> getTheNodes(){
+		return nodes;
+	}
 	public List<Node> getNodes() {
 		return Collections.unmodifiableList(nodes);
 	}
